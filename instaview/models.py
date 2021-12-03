@@ -15,3 +15,6 @@ class Images(models.Model):
 
     def __str__(self):
         return self.title 
+
+    def delete_image(self):
+            self.delete()    
