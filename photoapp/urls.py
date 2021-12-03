@@ -14,13 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.conf.urls import include,path 
+from django.urls import path,include
+# from django.conf.urls import include,url
 from django.contrib.auth import views 
-
+from django_registration.backends.one_step.views import RegistrationView
 
 urlpatterns = [
-    path(r'^admin/', admin.site.urls),
-    path(r'',include('instaview.urls')),
-    path(r'^accounts/', include('registration.backends.simple.urls')),
-    path(r'^logout/$',views.logout, {"next_page": '/'}), 
+    path('admin/', admin.site.urls),
+    path('',include('instaview.urls')),
+    path('accounts/register/', RegistrationView.as_view(success_url='/'),
+         name='django_registration_register'),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('logout/', views.redirect_to_login, name='logout'),
 ]
