@@ -55,3 +55,10 @@ class Comments(models.Model):
 
     def save_comment(self):
         self.save()
+
+   
+    def delete_comment(self):
+        self.delete()
+
+    def __str__(self):
+        return self.comment_date        
