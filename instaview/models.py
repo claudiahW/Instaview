@@ -45,6 +45,8 @@ class Likes(models.Model):
     def __str__(self):
         return self.likes
 
+    # def __str__(self):
+    #     return self.user
 
 
 class Comments(models.Model):
