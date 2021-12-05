@@ -15,3 +15,6 @@ def profile(request):
     # get the profile of the current logged in user
     profile = Profile.objects.filter(user_id=current_user.id).first()
     return render(request, 'profile.html', {"image": image, "profile": profile})
+
+
+    
