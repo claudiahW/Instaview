@@ -6,6 +6,5 @@ from .import views
 urlpatterns = [
     path('',views.index,name = 'index'),
     path('profile/', views.profile, name='profile'),
-    # path('like/<int:id>/', views.like_image, name='like.image'),
-    path(r'^search/', views.search_profile, name='search'),
+    path('search/', views.search_post, name='search.post')
 ]

@@ -22,34 +22,34 @@ class Image(models.Model):
     def delete_image(self):
             self.delete()    
 
+    @classmethod
+    # search images using image name
+    def search_image_name(cls, search_term):
+        images = cls.objects.filter(
+        title__icontains=search_term)
+        return images    
+
+    def _str_(self):
+        return self.user.username       
+
+    def _str_(self):
+        return self.title        
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     profile_photo = CloudinaryField('image')
     bio = models.TextField(max_length=500, blank=True, null=True)
     contact = models.CharField(max_length=50, blank=True, null=True)
-
-    @classmethod
-    def search_profile(cls, name):
-        return cls.objects.filter(user_username_icontains=name).all()
-
+    
+    def update(self,title,caption):
+        self.save()
 
     def save_profile(self):
-        self.save() 
+        self.save()
 
     def delete_profile(self):
         self.delete()
 
-    def update_bio(self,new_bio):
-        self.bio = new_bio
-        self.save()
-
-    def update_image(self, user_id, new_image):
-        user = User.objects.get(id = user_id)
-        self.photo = new_image 
-        self.save()
-    
-    # def update(self,title,caption):
-    #     self.save()
     
 class Likes(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
@@ -76,7 +76,6 @@ class Comments(models.Model):
         self.delete()
 
     def __str__(self):
-        return self.comment_date        
+        return self.comment_date  
         
-        
-        
+              
