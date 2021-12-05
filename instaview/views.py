@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Image,Profile 
 from django.contrib.auth.decorators import login_required
 from .forms import ImageForm
+from django.shortcuts import render,redirect, get_object_or_404
 
 
 def index(request):
@@ -20,7 +21,7 @@ def profile(request):
         if form.is_valid():
             form.instance.user = request.user
             form.save()
-            redirect('profile')
+    redirect('profile')
     return render(request, 'profile.html', {"image": image, "profile": profile})
 
 
