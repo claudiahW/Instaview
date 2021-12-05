@@ -7,5 +7,5 @@ urlpatterns = [
     path('',views.index,name = 'index'),
     path('profile/', views.profile, name='profile'),
     # path('like/<int:id>/', views.like_image, name='like.image'),
-
+    path(r'^search/', views.search_profile, name='search'),
 ]

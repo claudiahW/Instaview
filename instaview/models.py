@@ -27,16 +27,29 @@ class Profile(models.Model):
     profile_photo = CloudinaryField('image')
     bio = models.TextField(max_length=500, blank=True, null=True)
     contact = models.CharField(max_length=50, blank=True, null=True)
-    
-    def update(self,title,caption):
-        self.save()
+
+    @classmethod
+    def search_profile(cls, name):
+        return cls.objects.filter(user_username_icontains=name).all()
+
 
     def save_profile(self):
-        self.save()
+        self.save() 
 
     def delete_profile(self):
         self.delete()
 
+    def update_bio(self,new_bio):
+        self.bio = new_bio
+        self.save()
+
+    def update_image(self, user_id, new_image):
+        user = User.objects.get(id = user_id)
+        self.photo = new_image 
+        self.save()
+    
+    # def update(self,title,caption):
+    #     self.save()
     
 class Likes(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
@@ -64,3 +77,6 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment_date        
+        
+        
+        
