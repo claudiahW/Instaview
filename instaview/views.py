@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Image,Profile 
+from .models import Image,Likes 
 from django.contrib.auth.decorators import login_required
 from .forms import ImageForm
 from django.shortcuts import render,redirect, get_object_or_404
@@ -37,3 +37,22 @@ def search_post(request):
         message = 'Not found'
         return render(request, 'all-photos/search.html', {'danger': message})
     
+def like_image(request):
+    user = request.user
+    if request.method == 'POST':
+        image_id = request.POST.get('image_id')
+        image_pic =Image.objects.get(id=image_id)
+        if user in image_pic.liked.all():
+            image_pic.liked.add(user)
+        else:
+            image_pic.liked.add(user)    
+            
+        like,created =Likes.objects.get_or_create(user=user, image_id=image_id)
+        if not created:
+            if like.value =='Like':
+               like.value = 'Unlike'
+        else:
+               like.value = 'Like'
+
+        like.save()       
+    return redirect('index')
