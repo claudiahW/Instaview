@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Image,Profile 
 from django.contrib.auth.decorators import login_required
+from .forms import ImageForm
 
 
 def index(request):
@@ -14,6 +15,12 @@ def profile(request):
     image = Image.objects.filter(user_id=current_user.id)
     # get the profile of the current logged in user
     profile = Profile.objects.filter(user_id=current_user.id).first()
+    if request.method == 'POST':
+        form = ImageForm (request.POST , request.FILES)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            redirect('profile')
     return render(request, 'profile.html', {"image": image, "profile": profile})
 
 
