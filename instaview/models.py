@@ -10,7 +10,7 @@ class Image(models.Model):
     title = models.CharField(max_length=100)
     caption= models.TextField(max_length=100)
     post_date = models.DateTimeField(auto_now_add=True,null=True)
-    profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    # profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     like_count = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
     def save_image(self):

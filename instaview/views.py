@@ -16,13 +16,14 @@ def profile(request):
     image = Image.objects.filter(user_id=current_user.id)
     # get the profile of the current logged in user
     profile = Profile.objects.filter(user_id=current_user.id).first()
+    form = ImageForm()
     if request.method == 'POST':
         form = ImageForm (request.POST , request.FILES)
         if form.is_valid():
             form.instance.user = request.user
             form.save()
-    redirect('profile')
-    return render(request, 'profile.html', {"image": image, "profile": profile})
+        redirect('profile')
+    return render(request, 'profile.html', {"image": image, "profile": profile , "form": form})
 
 
     
