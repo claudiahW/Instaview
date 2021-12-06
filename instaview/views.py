@@ -50,7 +50,7 @@ def like_image(request):
         like,created =Likes.objects.get_or_create(user=user, image_id=image_id)
         if not created:
             if like.value =='Like':
-               like.value = 'Unlike'
+               like.value = 'Dislike'
         else:
                like.value = 'Like'
 
