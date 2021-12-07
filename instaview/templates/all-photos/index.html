@@ -3,30 +3,21 @@
 {% block content %}
 {{block.super}}
 
-<div class="container">
-  <div class="row">
+<div class="container Prof">
+  <div class="row" style="width:40%; height:auto;">
     {% for pic in image %}
-    <!-- {% if profile.profile_photo %}
-<img src="{{profile.profile_photo.url}}" alt="" class="card-img-top">
-{%else%}
-<img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
-    class="card-img-top" alt="My profile picture" style="vertical-align: middle;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;">
-{% endif %} -->
-
 
  {% if profile.profile_photo %}
             
-                    <img src="{{profile.profile_photo.url}}" alt="My profile picture" style="border-radius: 50%; width: 5%; margin-right: 60%; height: 10%;">
+                    <img src="{{profile.profile_photo.url}}" alt="My profile picture" style="border-radius: 50%; width: 5%;height: 10%; margin-top: 7;">
                     {%else%}
                     <img  src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
-                    class="card-img-top" alt="My profile picture" style="border-radius: 50%; width: 5%; margin-right: 60%;">
+                    class="card-img-top" alt="My profile picture" style="border-radius: 50%; width: 5%; margin-top: 7%;">
                     
-                    <div style="margin-right: 47%;"><a class='btn btn-default' href="/profile" style="font-weight: 700;">{{pic.user}}</a></div>
+                    <div><a class='btn btn-default' href="/profile" style="font-weight: 700;">{{pic.user}}</a></div>
             {% endif %}
-    <div class="col-md-4"> 
+   <div class="">
+    <div class="col-md-12" > 
         <h4>{{pic.title}}</h4>
 
 
@@ -35,6 +26,7 @@
         </div>
         {{pic.post_date}}
     </div>
+   </div>
     <form action = "{% url 'like-image' %}"   method='POST'>
         {% csrf_token %}
         <input type="hidden" name="image_id" value="{{pic.id}}">
