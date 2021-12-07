@@ -60,4 +60,20 @@
               </div>
             </div>
 </section>
+<h3>My posts</h3>
+        {% for image in images %}
+        <div class="col-md-4">
+            
+                <div class="card mb-4">
+                    <img src="{{ image.image.url }}" class="img-responsive" alt="Image">
+                </div>
+        </div>
+        {% empty %}
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="alert alert-info" role="alert">
+                No posts!
+            </div>
+        </div>
+        {% endfor %}
 {% endblock %}
