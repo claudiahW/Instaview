@@ -3,7 +3,7 @@
 This is the second Independent Project for django python on 8/12/2021.This project was generated with [python3.8]
 
 ## Description
-Instaviewer allows a user to login as admin and upload photos,delete and edit them.
+Instaviewer allows a user to create an account,login to the account and even upload photos on the said account.A user can view posts uploaded by other users/accounts,like and even comment on their posts! 
 
 ## Features
 1. It uses python3.8.
