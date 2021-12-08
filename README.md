@@ -6,7 +6,11 @@ This is the second Independent Project for django python on 8/12/2021.This proje
 Instaviewer allows a user to create an account,login to the account and even upload photos on the said account.A user can view posts uploaded by other users/accounts,like and even comment on their posts! 
 
 ## Features
-1. It uses python3.8.
+ 1.Login.
+ 2.Upload.
+ 3.Edit profile.
+ 4.Logout.
+
 ## Known Bugs
 There are no known bugs.Kindly contact me in case you find one.
 
