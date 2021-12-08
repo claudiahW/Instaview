@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ImageForm,CommentForm
 from django.shortcuts import render,redirect, get_object_or_404
 
-
+@login_required(login_url='/accounts/login/')
 def index(request):
     image= Image.objects.all().order_by('-id')
     if request.method == 'POST':  
