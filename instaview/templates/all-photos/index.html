@@ -1,7 +1,12 @@
 {%extends 'all-photos/base.html'%}
+{% load bootstrap4 %}
 
 {% block content %}
 {{block.super}}
+
+<br>
+<br>
+
 
 <div class="container Prof">
   <div class="row" style="width:40%; height:auto;">
@@ -25,7 +30,23 @@
             <img class="images" src="{{pic.image.url}}" alt="image1">
         </div>
         {{pic.post_date}}
+        <div>
+            <p>COMMENTS:</p>
+                {% for comment in pic.saved_comments %}
+
+                <p> <span><strong>{{comment.user}}</strong></span>: {{comment.comment}}</p>
+
+                {% endfor %}
+          </div>
     </div>
+    <form action="{% url 'comments' image_id=pic.id%}" class="comment-form com" method="post"
+                  enctype="multipart/form-data">
+                  {% csrf_token%}
+                  {% bootstrap_form form %}
+                  <div class="form-group text-center">
+                      <input type="submit" class="btn btn-primary login-btn" value="Comment">
+                  </div>
+                  <input type="hidden" name="next" value="{{next}}">
    </div>
     <form action = "{% url 'like-image' %}"   method='POST'>
         {% csrf_token %}

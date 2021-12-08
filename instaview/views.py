@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Image,Likes 
+from .models import Image,Likes,Comment,Profile
 from django.contrib.auth.decorators import login_required
 from .forms import ImageForm,CommentForm
 from django.shortcuts import render,redirect, get_object_or_404
@@ -7,7 +7,17 @@ from django.shortcuts import render,redirect, get_object_or_404
 
 def index(request):
     image= Image.objects.all().order_by('-id')
-    return render(request, 'all-photos/index.html', {'image':image})
+    if request.method == 'POST':  
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            com = form.save(commit=False)
+            com.user = request.user
+            com.save()
+            return redirect('index')
+    
+    else:
+        form = CommentForm()
+    return render(request, 'all-photos/index.html', {'image':image ,'form':form})
  
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -15,7 +25,7 @@ def profile(request):
     # get images for the current logged in user
     image = Image.objects.filter(user_id=current_user.id)
     # get the profile of the current logged in user
-    # profile = Profile.objects.filter(user_id=current_user.id).first()
+    profile = Profile.objects.filter(user_id=current_user.id).first()
     form = ImageForm()
     if request.method == 'POST':
         form = ImageForm (request.POST , request.FILES)

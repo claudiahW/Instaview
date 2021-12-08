@@ -2,6 +2,8 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 import datetime as dt
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 class Image(models.Model):
@@ -13,13 +15,20 @@ class Image(models.Model):
     liked= models.ManyToManyField(User,default=None,blank=True,related_name='liked')
     # profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     like_count = models.IntegerField(default=0)
-    comment_count = models.IntegerField(default=0)
+
+    @receiver(post_save , sender = User)
+    def create_profile(instance,sender,created,**kwargs):
+      if created:
+        Profile.objects.create(user = instance)
+
+    @receiver(post_save,sender = User)
+    def save_profile(sender,instance,**kwargs):
+      instance.profile.save()
+    
     def save_image(self):
         self.save()
 
-    @property
-    def saved_comments(self):
-        return self.comments.all()
+
 
     def __str__(self):
         return self.title 
@@ -32,7 +41,11 @@ class Image(models.Model):
     def search_image_name(cls, search_term):
         images = cls.objects.filter(
         title__icontains=search_term)
-        return images    
+        return images   
+
+    @property
+    def saved_comments(self):
+        return self.comments.all() 
 
     def _str_(self):
         return self.user.username       
@@ -45,6 +58,15 @@ class Profile(models.Model):
     profile_photo = CloudinaryField('image')
     bio = models.TextField(max_length=500, blank=True, null=True)
     contact = models.CharField(max_length=50, blank=True, null=True)
+
+    @receiver(post_save , sender = User)
+    def create_profile(instance,sender,created,**kwargs):
+      if created:
+        Profile.objects.create(user = instance)
+
+    @receiver(post_save,sender = User)
+    def save_profile(sender,instance,**kwargs):
+      instance.profile.save()
     
     def update(self,title,caption):
         self.save()
@@ -83,3 +105,5 @@ class Comment(models.Model):
     def display_comment(cls,image_id):
         comments = cls.objects.filter(image_id = image_id)
         return comments
+
+        
