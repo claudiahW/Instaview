@@ -17,6 +17,10 @@ class Image(models.Model):
     def save_image(self):
         self.save()
 
+    @property
+    def saved_comments(self):
+        return self.comments.all()
+
     def __str__(self):
         return self.title 
 
@@ -70,20 +74,12 @@ class Likes(models.Model):
     #     return self.user
 
 
-class Comments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    comment = models.CharField(max_length=50)
-    comment_date = models.DateTimeField(auto_now_add=True)
+class Comment(models.Model):
+    comment = models.CharField(max_length=250)
+    image = models.ForeignKey(Image,on_delete = models.CASCADE,related_name='comments')
+    user = models.ForeignKey(User,on_delete = models.CASCADE,related_name='comments')
 
-    def save_comment(self):
-        self.save()
-
-   
-    def delete_comment(self):
-        self.delete()
-
-    def __str__(self):
-        return self.comment_date  
-        
-              
+    @classmethod
+    def display_comment(cls,image_id):
+        comments = cls.objects.filter(image_id = image_id)
+        return comments

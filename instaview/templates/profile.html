@@ -37,6 +37,22 @@
                 <button>add photo</button>
             </div>
         </div>
+        <h3>My posts</h3>
+        {% for image in image %}
+        <div class="col-md-4">
+            
+                <div class="card mb-4">
+                    <img src="{{ image.image.url }}" class="img-responsive" alt="Image">
+                </div>
+        </div>
+        {% empty %}
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="alert alert-info" role="alert">
+                No posts!
+            </div>
+        </div>
+        {%endfor%}
         <div class="modal fade" id="showPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mode" role="document">
               <div class="modal-content">
@@ -60,20 +76,6 @@
               </div>
             </div>
 </section>
-<h3>My posts</h3>
-        {% for image in image %}
-        <div class="col-md-4">
-            
-                <div class="card mb-4">
-                    <img src="{{ image.image.url }}" class="img-responsive" alt="Image">
-                </div>
-        </div>
-        {% empty %}
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="alert alert-info" role="alert">
-                No posts!
-            </div>
-        </div>
-        {% endfor %}
+
+        
 {% endblock %}

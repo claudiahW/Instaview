@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Image,Likes 
 from django.contrib.auth.decorators import login_required
-from .forms import ImageForm
+from .forms import ImageForm,CommentForm
 from django.shortcuts import render,redirect, get_object_or_404
 
 
@@ -56,3 +56,16 @@ def like_image(request):
 
         like.save()       
     return redirect('index')
+
+@login_required
+def comments(request,image_id):
+  form = CommentForm()
+  image = Image.objects.filter(pk = image_id).first()
+  if request.method == 'POST':
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save(commit = False)
+      comment.user = request.user
+      comment.image = image
+      comment.save() 
+  return redirect('index')    
