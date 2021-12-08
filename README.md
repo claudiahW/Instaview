@@ -1,6 +1,6 @@
 # INSTAVIEWER
 
-This is the first Independent Project for django python on 8/12/2021.This project was generated with [python3.8]
+This is the second Independent Project for django python on 8/12/2021.This project was generated with [python3.8]
 
 ## Description
 Instaviewer allows a user to login as admin and upload photos,delete and edit them.
